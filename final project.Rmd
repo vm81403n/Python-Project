@@ -1,0 +1,141 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-11-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+
+
+
+
+```{r}
+df  <- read.csv("C:/Users/mayek/OneDrive/Documents/Student_Behaviour.csv")
+data <- read.csv("C:/Users/mayek/OneDrive/Documents/Student_Behaviour.csv", header = TRUE)
+head(df)
+filtered_df = df[df['Financial.Status'] == 'Bad']
+print(filtered_df)
+```
+
+```{r}
+college_df = df[df['X10th.Mark'] > 80]
+college_df
+
+```
+
+
+```{r}
+
+
+filtered_df = df[df['Financial.Status'] == 'Bad']
+college_df = df[df['college.mark'] > 90]
+tenth_df = df[['X10th.Mark']]
+twelfth_df = df[['X12th.Mark']]
+
+selected_df <- df[df["Financial.Status"] == "Bad", c("daily.studing.time", "prefer.to.study.in")]
+print(college_df)
+print(tenth_df)
+print(twelfth_df)
+# Create a graph
+plot(df$X10th.Mark, df$X12th.Mark,
+     xlab = "X10th Mark", ylab = "X12th Mark",
+     main = "Scatter Plot of X10th Mark vs X12th Mark")
+
+
+
+
+
+```
+
+```{r}
+library(ggplot2)
+
+```
+
+
+```{r}
+# Identify rows where Financial.Status is 'Bad'
+bad_rows <- selected_df$Financial.Status == "Bad"
+
+# Identify indices of the highest marks for each column
+max_indices_X10th <- which(selected_df$X10th.Mark == max(selected_df$X10th.Mark[bad_rows]))
+max_indices_X12th <- which(selected_df$X12th.Mark == max(selected_df$X12th.Mark[bad_rows]))
+max_indices_college <- which(selected_df$college.mark == max(selected_df$college.mark[bad_rows]))
+
+# Remove the rows with the highest marks for each column
+selected_df <- selected_df[c(max_indices_X10th, max_indices_X12th, max_indices_college)]
+
+# Print the updated selected_df
+print(selected_df)
+
+```
+
+
+```{r}
+filtered_df = df[df['Financial.Status'] == 'Bad']
+selected_df <- df[df["Financial.Status"] == "Bad", c("X10th.Mark", "X12th.Mark", "college.mark","daily.studing.time", "prefer.to.study.in","Financial.Status")]
+print(selected_df)
+```
+
+
+
+```{r}
+filtered_df = df[df['Financial.Status'] == 'Bad']
+selected_df <- df[df["Financial.Status"] == "Bad", c("X10th.Mark", "X12th.Mark", "college.mark","daily.studing.time", "prefer.to.study.in","Financial.Status")]
+print(selected_df)
+par(mfrow=c(1, 3))  # Setting up a 1x3 grid for subplots
+
+# Plotting X10th.Mark vs Financial.Status
+plot(selected_df$X10th.Mark, main="X10th Mark vs Financial Status", xlab="X10th Mark", ylab="Financial Status", col=ifelse(selected_df$Financial.Status=="Bad", "red", "blue"))
+
+# Plotting X12th.Mark vs Financial.Status
+plot(selected_df$X12th.Mark, main="X12th Mark vs Financial Status", xlab="X12th Mark", ylab="Financial Status", col=ifelse(selected_df$Financial.Status=="Bad", "black", "yellow"))
+
+# Plotting college.mark vs Financial.Status
+plot(selected_df$college.mark, main="College Mark vs Financial Status", xlab="College Mark", ylab="Financial Status", col=ifelse(selected_df$Financial.Status=="Bad", "grey", "blue"))
+
+```
+
+
+
+```{r}
+colnames("Financial_Status")
+
+# If the column names are different, replace "Financial_Status" with the correct column name
+# For example, if the column name is "FinancialStatus," use that in the code instead
+
+# Assuming the column name is "Financial_Status," use the correct column name in the code
+students_with_limited_financial_resources <- data[data$Financial_Status %in% c("Bad", "Awful") ]
+
+
+# Display the relevant columns for study habits
+selected_columns <- c("Hobbies", "Daily_Studing_Time", "Prefer_to_Study_In", "Stress_Level")
+study_habits_of_students_with_limited_financial_resources <- students_with_limited_financial_resources[selected_columns]
+
+# Display the result
+print(study_habits_of_students_with_limited_financial_resources)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
